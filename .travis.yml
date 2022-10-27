@@ -1,0 +1,12 @@
+language: python
+dist: trusty
+sudo: required
+python:
+    - "2.7"
+services:
+    - docker
+postgresql: "9.1"
+install:
+    - bash bin/travis-build.bash
+script:
+    - bash bin/travis-run.sh

@@ -1,0 +1,96 @@
+{% import 'macros/form.html' as form %} {% set username_error = true if
+error_summary %} {% set password_error = true if error_summary %}
+<style type="text/css" media="screen">
+#field-password {
+ font-size: 1.5vw!important;
+ height: 2vw!important; }
+#field-login {
+
+ font-size: 1.5vw!important;
+ height: 2vw!important; }
+
+ label.control-label {
+  margin-top:0.5vw!important;
+  
+  margin-bottom:0.5vw!important;
+  line-height: 0!important;
+  font-size: 1.5vw!important;
+}
+label.checkbox {
+  font-size: 1.1vw!important;
+  margin: 0!important;
+  padding: 0!important;
+}
+.control-group{
+  margin-bottom: 0.5vw!important;
+}
+
+
+
+</style>
+<link href="gobar_style.css" rel="stylesheet" type="text/css">
+<form
+  action="{{ action }}"
+  method="post"
+  class="form-horizontal"
+  style="
+    background-image: url(/img/login2.png);
+    background-size: 100% 100%;
+    height: 40vw;
+    opacity: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding-top: 7vw;
+    background-color: rgba(0, 0, 0, 0);
+    border-style: none;
+    width: 43vw;
+    height: 43vw;
+    box-shadow: none;
+  "
+>
+  <div id="data-login" style="width: 65%;line-height: 4vw; margin-top: 4vw;">
+    <h4 class="login-access-text" style=" line-height: 0;"><b style="font-size:2vw;margin-bottom: 1vw;">Bienvenido</b></h4>
+   
+    {{ form.errors(errors=error_summary) }} 
+    
+    {{ form.input('login', placeholder="", id='field-login', value="", error=username_error) }}
+    
+    {{ form.input('password', placeholder='', id='field-password', type="password", value="", error=password_error) }} 
+    
+    {% if login_error %}
+ 
+    <p class="error">
+      No encontramos ningún usuario con esa combinación de usuario y contraseña.
+      {% if h.is_plugin_present('security') %} A los {{
+      h.search_for_value_in_config_file('ckanext.security.login_max_count') }}
+      intentos fallidos se bloqueará la cuenta. {% endif %}
+    </p>
+    {% endif %}
+
+    <div class="login-password-box">
+      <div class="login-remember"style=" width: 40%;
+      
+      font-size: 1.2vw;
+      height: 2vw;" >
+        {{ form.checkbox('remember', label='Recordarme', id='field-remember',
+        checked=false, value="63072000")}}
+      </div>
+      <div class="password-reset" style="
+      font-size: 1.1vw;
+      height: 2vw;line-height:1.5vw!important">
+        <a href="#" id="password-reset-show-modal" style="padding-left: 1vw;">Olvidé mi contraseña</a>
+      </div>
+    </div>
+
+    <div id="btnLogin">
+      {% block login_button %}
+      <button type="submit" style="margin-bottom: 0vw;
+      padding-top: 0;
+      padding-bottom: 0;
+      font-size: 1.3vw;
+      border-radius: 5px;">INGRESAR</button>
+      {% endblock %}
+    </div>
+  </div>
+</form>
